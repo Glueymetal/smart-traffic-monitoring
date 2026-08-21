@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smart-traffic-monitor-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: smart-traffic-monitor
+  template:
+    metadata:
+      labels:
+        app: smart-traffic-monitor
+    spec:
+      containers:
+        - name: smart-traffic-monitor
+          image: mj673/smart-traffic-monitoring:latest
