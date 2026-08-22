@@ -37,11 +37,17 @@ def process_reading(record):
     if record["air quality"] > 90:
         poorAirQuality = True
     dt =  datetime.now()
+    if congestion:
+        suggestion = "Extend the green signal duration at this intersection."
+    else:
+        suggestion = None
     result = {"intersection_id":record["intersection_id"],
               "timestamp":datetime.isoformat(dt),
               "Congestion":congestion,
               "Poor_Air_Quality":poorAirQuality,
-              "alert_required":congestion | poorAirQuality}
+              "alert_required":congestion | poorAirQuality,
+              "suggestion":suggestion
+              }
     return result
 
 
@@ -52,4 +58,6 @@ while True:
     print(result)
     if result["alert_required"]:
         print("ALERT!! - Notifying the traffic authority now.")
+    if result["suggestion"]:
+        print(result["suggestion"])
     time.sleep(5)
